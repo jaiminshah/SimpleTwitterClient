@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/tweet_margin"
+    android:paddingRight="@dimen/tweet_margin"
+    android:paddingTop="@dimen/tweet_margin"
+    android:paddingBottom="@dimen/tweet_margin">
+
+    <ImageView
+        android:layout_width="@dimen/profile_img"
+        android:layout_height="@dimen/profile_img"
+        android:id="@+id/ivProfileImage"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:src="@drawable/user_img_placeholder"
+        android:layout_marginRight="@dimen/small_margin"
+        android:layout_marginEnd="@dimen/small_margin"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/username_label"
+        android:id="@+id/tvUsername"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/ivProfileImage"
+        android:layout_toEndOf="@+id/ivProfileImage"
+        android:layout_marginRight="@dimen/tiny_margin"
+        android:layout_marginEnd="@dimen/tiny_margin"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/screenname_label"
+        android:id="@+id/tvScreenname"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/tvUsername"
+        android:layout_toEndOf="@+id/tvUsername"
+        android:textColor="@color/secondary_gary_3" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/time_elapsed_label"
+        android:id="@+id/tvTimeElapsed"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:textColor="@color/secondary_gary_3"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tweet_body_label"
+        android:id="@+id/tvBody"
+        android:layout_below="@+id/tvScreenname"
+        android:layout_toRightOf="@+id/ivProfileImage"
+        android:layout_toEndOf="@+id/ivProfileImage"
+        android:textColor="@color/secondary_gary_1"
+        android:autoLink="all"
+        android:linksClickable="true"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/ivProfileImage"
+        android:layout_toEndOf="@+id/ivProfileImage"
+        android:layout_below="@+id/tvBody"
+        android:visibility="gone">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_reply"/>
+    </LinearLayout>
+
+
+</RelativeLayout>
