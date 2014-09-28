@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.jaiminshah.codepath.basictwitter.activities.TimelineActivity" >
-    <item android:id="@+id/action_tweet"
+    <item android:id="@+id/action_compose_tweet"
         android:title="@string/action_tweet"
         android:showAsAction="always"
         android:icon="@drawable/ic_new_tweet"/>

@@ -1,6 +1,7 @@
 package com.jaiminshah.codepath.basictwitter.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
@@ -18,6 +19,7 @@ import com.jaiminshah.codepath.basictwitter.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -29,6 +31,7 @@ public class TimelineActivity extends Activity {
     private ListView lvTweets;
     private SwipeRefreshLayout swipeContainer;
     long max_id;
+    private final int REQUEST_CODE = 20;
 
 
     @Override
@@ -38,7 +41,6 @@ public class TimelineActivity extends Activity {
 
         setupView();
         populateTimeline();
-
 
     }
 
@@ -97,9 +99,36 @@ public class TimelineActivity extends Activity {
             @Override
             public void onFailure(Throwable throwable, String s) {
                 Log.d("debug", throwable.toString());
-                Log.d("debug", s.toString());
+                Log.d("debug", s);
             }
         });
+    }
+
+    private void composeTweet() {
+        Intent i = new Intent(this,ComposeActivity.class);
+        startActivityForResult(i, REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE){
+            String status = data.getExtras().getString("status");
+            client.postUpdate(status,new JsonHttpResponseHandler(){
+                @Override
+                public void onSuccess(JSONObject jsonObject) {
+                    aTweets.clear();
+                    max_id = 0;
+                    populateTimeline();
+                }
+
+
+                @Override
+                public void onFailure(Throwable throwable, String s) {
+                    Log.d("debug", throwable.toString());
+                    Log.d("debug", s);
+                }
+            });
+        }
     }
 
     @Override
@@ -111,16 +140,15 @@ public class TimelineActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        switch (item.getItemId()){
+            case R.id.action_compose_tweet:
+                composeTweet();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
         }
 
-        return super.onOptionsItemSelected(item);
     }
+
 }

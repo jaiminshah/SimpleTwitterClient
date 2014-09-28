@@ -11,5 +11,8 @@
     <string name="screenname_label">\@jaimintweets</string>
     <string name="time_elapsed_label">2m</string>
     <string name="action_tweet">Tweet</string>
+    <string name="title_activity_compose">ComposeActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="compose_tweet_hint">What\'s happening?</string>
 
 </resources>
