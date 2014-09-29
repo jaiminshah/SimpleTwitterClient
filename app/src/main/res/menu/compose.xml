@@ -1,6 +1,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.jaiminshah.codepath.basictwitter.activities.ComposeActivity" >
+    <item android:id="@+id/action_chars_left"
+        android:title="@string/action_chars_left"
+        android:showAsAction="always"/>
     <item android:id="@+id/action_post_tweet"
         android:title="@string/action_tweet"
         android:showAsAction="always"/>

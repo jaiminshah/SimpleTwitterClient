@@ -18,6 +18,8 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:inputType="text"
+        android:inputType="textMultiLine"
+        android:scrollHorizontally="false"
+        android:maxLength="300"
         android:hint="@string/compose_tweet_hint" />
 </RelativeLayout>

@@ -2,7 +2,12 @@ package com.jaiminshah.codepath.basictwitter.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.SpannableString;
+import android.text.TextWatcher;
+import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -12,6 +17,8 @@ import com.jaiminshah.codepath.basictwitter.R;
 public class ComposeActivity extends Activity {
 
     EditText etComposeTweet;
+    MenuItem action_chars_left;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,7 +27,33 @@ public class ComposeActivity extends Activity {
     }
 
     private void setupViews() {
-        etComposeTweet = (EditText)findViewById(R.id.etComposeTweet);
+        etComposeTweet = (EditText) findViewById(R.id.etComposeTweet);
+        etComposeTweet.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                int chars_left = 140 - s.length();
+//                if (chars_left < 0) {
+//                    chars_left = chars_left*(-1);
+//                    SpannableString spanString = new SpannableString(Integer.toString(chars_left));
+//                    spanString.setSpan(new ForegroundColorSpan(Color.RED),0,spanString.length(),0);
+//                    action_chars_left.setTitle(spanString);
+//                } else {
+//
+//                    action_chars_left.setTitle(Integer.toString(chars_left));
+//                }
+                action_chars_left.setTitle(Integer.toString(chars_left));
+            }
+        });
     }
 
     private void postTweet() {
@@ -28,8 +61,8 @@ public class ComposeActivity extends Activity {
         String status = etComposeTweet.getText().toString();
         //Trim the status to 140 chars
 //        status = status.substring(0,139);
-        data.putExtra("status",status);
-        setResult(RESULT_OK,data);
+        data.putExtra("status", status);
+        setResult(RESULT_OK, data);
         finish();
     }
 
@@ -37,14 +70,18 @@ public class ComposeActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.compose, menu);
+        action_chars_left = menu.findItem(R.id.action_chars_left);
+        SpannableString spanString = new SpannableString(Integer.toString(140));
+        spanString.setSpan(new ForegroundColorSpan(Color.RED),0,spanString.length(),0);
+        action_chars_left.setTitle(spanString);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.action_post_tweet:
-                 postTweet();
+                postTweet();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

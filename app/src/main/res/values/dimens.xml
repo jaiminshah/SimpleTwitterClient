@@ -9,5 +9,6 @@
     <dimen name="small_margin">6dp</dimen>
     <dimen name="tweet_margin">10dp</dimen>
     <dimen name="tiny_margin">3dp</dimen>
+    <dimen name="small_font_size">12sp</dimen>
 
 </resources>

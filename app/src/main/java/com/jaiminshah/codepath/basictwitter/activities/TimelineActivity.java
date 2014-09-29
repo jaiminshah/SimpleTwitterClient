@@ -7,8 +7,11 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.jaiminshah.codepath.basictwitter.R;
 import com.jaiminshah.codepath.basictwitter.adapters.TweetArrayAdapter;
@@ -57,6 +60,17 @@ public class TimelineActivity extends Activity {
             public void onLoadMore(int page, int totalItemsCount) {
 //                Toast.makeText(getBaseContext(),"Load More!!",Toast.LENGTH_SHORT).show();
                 populateTimeline();
+            }
+        });
+
+        lvTweets.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Intent i = new Intent(TimelineActivity.this, DetailActivity.class);
+                Tweet tweet = tweets.get(position);
+                i.putExtra("tweet",tweet);
+                startActivity(i);
             }
         });
 
