@@ -12,13 +12,13 @@ import java.util.ArrayList;
 /**
  * Created by jaimins on 9/28/14.
  */
-public class Url implements Parcelable {
+public class TwitterUrl implements Parcelable {
     private String url;
     private String expanded_url;
     private String display_url;
 
-    public static ArrayList<Url> fromJSONArray(JSONArray jsonArray) {
-        ArrayList<Url> urls = new ArrayList<Url>();
+    public static ArrayList<TwitterUrl> fromJSONArray(JSONArray jsonArray) {
+        ArrayList<TwitterUrl> twitterUrls = new ArrayList<TwitterUrl>();
         for (int i = 0; i < jsonArray.length(); ++i) {
             JSONObject urlJSON = null;
             try {
@@ -28,26 +28,26 @@ public class Url implements Parcelable {
                 continue;
             }
 
-            Url url = Url.fromJSON(urlJSON);
-            if (url != null) {
-                urls.add(url);
+            TwitterUrl twitterUrl = TwitterUrl.fromJSON(urlJSON);
+            if (twitterUrl != null) {
+                twitterUrls.add(twitterUrl);
             }
         }
 
-        return urls;
+        return twitterUrls;
     }
-    public static Url fromJSON(JSONObject jsonObject) {
-        Url url = new Url();
+    public static TwitterUrl fromJSON(JSONObject jsonObject) {
+        TwitterUrl twitterUrl = new TwitterUrl();
         try {
-            url.url = jsonObject.getString("url");
-            url.expanded_url = jsonObject.getString("expanded_url");
-            url.display_url = jsonObject.getString("display_url");
+            twitterUrl.url = jsonObject.getString("url");
+            twitterUrl.expanded_url = jsonObject.getString("expanded_url");
+            twitterUrl.display_url = jsonObject.getString("display_url");
         } catch (JSONException e){
             e.printStackTrace();
             return null;
         }
 
-        return url;
+        return twitterUrl;
     }
 
     public String gethtmlUrl(){
@@ -78,22 +78,22 @@ public class Url implements Parcelable {
         dest.writeString(this.display_url);
     }
 
-    public Url() {
+    public TwitterUrl() {
     }
 
-    private Url(Parcel in) {
+    private TwitterUrl(Parcel in) {
         this.url = in.readString();
         this.expanded_url = in.readString();
         this.display_url = in.readString();
     }
 
-    public static final Parcelable.Creator<Url> CREATOR = new Parcelable.Creator<Url>() {
-        public Url createFromParcel(Parcel source) {
-            return new Url(source);
+    public static final Parcelable.Creator<TwitterUrl> CREATOR = new Parcelable.Creator<TwitterUrl>() {
+        public TwitterUrl createFromParcel(Parcel source) {
+            return new TwitterUrl(source);
         }
 
-        public Url[] newArray(int size) {
-            return new Url[size];
+        public TwitterUrl[] newArray(int size) {
+            return new TwitterUrl[size];
         }
     };
 }

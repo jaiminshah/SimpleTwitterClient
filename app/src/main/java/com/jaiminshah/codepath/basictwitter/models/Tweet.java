@@ -21,8 +21,8 @@ public class Tweet implements Parcelable {
     private long uid;
     private String createdAt;
     protected User user;
-    //    private ArrayList<Url> urls;
-    private Url url;
+    private ArrayList<TwitterUrl> twitterUrls;
+    private ArrayList<TwitterMedia> twitterMedias;
 
     public static ArrayList<Tweet> fromJSONArray(JSONArray jsonArray) {
         ArrayList<Tweet> tweets = new ArrayList<Tweet>();
@@ -52,11 +52,8 @@ public class Tweet implements Parcelable {
             tweet.uid = jsonObject.getLong("id");
             tweet.createdAt = jsonObject.getString("created_at");
             tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
-//            tweet.urls = Url.fromJSONArray(jsonObject.getJSONObject("entities").getJSONArray("urls"));
-            ArrayList<Url> urls = Url.fromJSONArray(jsonObject.getJSONObject("entities").getJSONArray("urls"));
-            if (urls.size() > 0) {
-                tweet.url = urls.get(0);
-            }
+            tweet.twitterUrls = TwitterUrl.fromJSONArray(jsonObject.getJSONObject("entities").getJSONArray("urls"));
+            tweet.twitterMedias = TwitterMedia.fromJSONArray(jsonObject.getJSONObject("entities").getJSONArray("media"));
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -66,18 +63,17 @@ public class Tweet implements Parcelable {
         return tweet;
     }
 
-
     public String getBody() {
         return body;
     }
 
     public String getFormattedBody() {
         String result = body;
-//        for(Url url: this.urls){
-//            result = result.replaceAll(url.getUrl(),url.gethtmlUrl());
-//        }
-        if (url != null) {
-            result = result.replaceAll(url.getUrl(), url.gethtmlUrl());
+        for (TwitterUrl twitterUrl : this.twitterUrls) {
+            result = result.replaceAll(twitterUrl.getUrl(), twitterUrl.gethtmlUrl());
+        }
+        for (TwitterMedia twitterMedia : this.twitterMedias){
+            result = result.replaceAll(twitterMedia.getUrl(), twitterMedia.gethtmlUrl());
         }
         return result;
     }
@@ -94,10 +90,9 @@ public class Tweet implements Parcelable {
         return user;
     }
 
-    public Url getUrl(){
-        return url;
-    }
     public Tweet() {
+        this.twitterUrls = new ArrayList<TwitterUrl>();
+        this.twitterMedias = new ArrayList<TwitterMedia>();
     }
 
     // getRelativeTimeAgo("Mon Apr 01 21:16:23 +0000 2014");
@@ -150,15 +145,18 @@ public class Tweet implements Parcelable {
         dest.writeLong(this.uid);
         dest.writeString(this.createdAt);
         dest.writeParcelable(this.user, 0);
-        dest.writeParcelable(this.url, 0);
+        dest.writeTypedList(this.twitterUrls);
+        dest.writeTypedList(this.twitterMedias);
     }
 
     private Tweet(Parcel in) {
+        this();
         this.body = in.readString();
         this.uid = in.readLong();
         this.createdAt = in.readString();
         this.user = in.readParcelable(User.class.getClassLoader());
-        this.url = in.readParcelable(Url.class.getClassLoader());
+        in.readTypedList(this.twitterUrls, TwitterUrl.CREATOR);
+        in.readTypedList(this.twitterMedias, TwitterMedia.CREATOR);
     }
 
     public static final Creator<Tweet> CREATOR = new Creator<Tweet>() {
