@@ -6,6 +6,7 @@ import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +22,7 @@ public class DetailActivity extends Activity {
     private TextView tvScreenname;
     private TextView tvStatus;
     private TextView tvCreatedAt;
+    private ImageView ivMedia;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,7 @@ public class DetailActivity extends Activity {
         tvScreenname = (TextView)findViewById(R.id.tvScreenname);
         tvStatus = (TextView)findViewById(R.id.tvStatus);
         tvCreatedAt = (TextView)findViewById(R.id.tvCreatedAt);
+        ivMedia = (ImageView)findViewById(R.id.ivMedia);
 
         ImageLoader.getInstance().displayImage(tweet.getUser().getProfileImageUrl(), ivProfileImage);
         tvUsername.setText(tweet.getUser().getName());
@@ -44,6 +47,13 @@ public class DetailActivity extends Activity {
         tvStatus.setText(Html.fromHtml(tweet.getFormattedBody()));
         tvStatus.setMovementMethod(LinkMovementMethod.getInstance());
         tvCreatedAt.setText(tweet.getFormattedCreatedAt());
+
+        if (tweet.getTwitterMedias() != null && tweet.getTwitterMedias().size() > 0){
+            ImageLoader.getInstance().displayImage(tweet.getTwitterMedias().get(0).getMedia_url_https(),ivMedia);
+            ivMedia.setVisibility(View.VISIBLE);
+        } else {
+            ivMedia.setVisibility(View.GONE);
+        }
 
     }
 

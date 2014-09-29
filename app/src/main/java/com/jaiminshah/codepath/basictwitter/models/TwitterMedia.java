@@ -18,6 +18,18 @@ public class TwitterMedia implements Parcelable {
     private String display_url;
     private String media_url_https;
 
+    public String getExpanded_url() {
+        return expanded_url;
+    }
+
+    public String getDisplay_url() {
+        return display_url;
+    }
+
+    public String getMedia_url_https() {
+        return media_url_https;
+    }
+
     public static ArrayList<TwitterMedia> fromJSONArray(JSONArray jsonArray) {
         ArrayList<TwitterMedia> twitterMedias = new ArrayList<TwitterMedia>();
         for (int i = 0; i < jsonArray.length(); ++i) {

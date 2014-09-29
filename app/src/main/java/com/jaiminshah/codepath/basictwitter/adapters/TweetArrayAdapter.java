@@ -37,6 +37,7 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
             viewHolder.tvScreenname = (TextView)convertView.findViewById(R.id.tvScreenname);
             viewHolder.tvTimeElapsed = (TextView)convertView.findViewById(R.id.tvTimeElapsed);
             viewHolder.tvBody = (TextView)convertView.findViewById(R.id.tvBody);
+            viewHolder.ivMedia = (ImageView)convertView.findViewById(R.id.ivMedia);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder)convertView.getTag();
@@ -52,6 +53,12 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
         viewHolder.tvTimeElapsed.setText(tweet.getRelativeTimeAgo());
         viewHolder.tvBody.setText(Html.fromHtml(tweet.getFormattedBody()));
 
+        if (tweet.getTwitterMedias() != null && tweet.getTwitterMedias().size() > 0){
+            imageLoader.displayImage(tweet.getTwitterMedias().get(0).getMedia_url_https(),viewHolder.ivMedia);
+            viewHolder.ivMedia.setVisibility(View.VISIBLE);
+        } else {
+            viewHolder.ivMedia.setVisibility(View.GONE);
+        }
 
         return  convertView;
     }
@@ -63,5 +70,6 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
         TextView tvScreenname;
         TextView tvBody;
         TextView tvTimeElapsed;
+        ImageView ivMedia;
     }
 }

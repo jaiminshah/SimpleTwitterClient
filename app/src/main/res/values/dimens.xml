@@ -10,5 +10,6 @@
     <dimen name="tweet_margin">10dp</dimen>
     <dimen name="tiny_margin">3dp</dimen>
     <dimen name="small_font_size">12sp</dimen>
+    <dimen name="media_image_height">150dp</dimen>
 
 </resources>
