@@ -190,44 +190,32 @@
             android:layout_marginTop="@dimen/small_margin">
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:id="@+id/ivReply"
                 android:src="@drawable/ic_tweet_action_inline_reply_off"
                 android:onClick="replyTweet"/>
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:id="@+id/ivRetweet"
                 android:src="@drawable/ic_tweet_action_inline_retweet_off"/>
 
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:id="@+id/ivFavCount"
                 android:src="@drawable/ic_tweet_action_inline_favorite_off"/>
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:id="@+id/ivFollow"
                 android:src="@drawable/ic_tweet_action_inline_follow_off"
                 android:visibility="visible"/>
