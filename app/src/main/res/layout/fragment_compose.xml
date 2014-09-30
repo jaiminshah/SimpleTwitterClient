@@ -1,0 +1,85 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.jaiminshah.codepath.basictwitter.fragments.ComposeFragment">
+
+
+    <ImageView
+        android:id="@+id/ivProfileImage"
+        android:layout_width="@dimen/profile_img"
+        android:layout_height="@dimen/profile_img"
+        android:layout_marginEnd="@dimen/small_margin"
+        android:layout_marginRight="@dimen/small_margin"
+        android:src="@drawable/user_img_placeholder"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/tvUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/tiny_margin"
+        android:layout_marginRight="@dimen/small_margin"
+        android:layout_toEndOf="@+id/ivProfileImage"
+        android:text="@string/username_label"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/ivProfileImage" />
+
+    <TextView
+        android:id="@+id/tvScreenname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/screenname_label"
+        android:textColor="@color/secondary_gary_3"
+        android:textSize="@dimen/small_font_size"
+        android:layout_below="@+id/tvUsername"
+        android:layout_alignRight="@+id/tvUsername"
+        android:layout_alignEnd="@+id/tvUsername" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/etComposeTweet"
+        android:inputType="textMultiLine"
+        android:scrollHorizontally="false"
+        android:maxLength="300"
+        android:hint="@string/compose_tweet_hint"
+        android:layout_below="@+id/ivProfileImage"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:gravity="top"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/action_tweet"
+        android:id="@+id/btnTweet"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/ivProfileImage"
+        android:layout_alignBottom="@+id/ivProfileImage"
+        android:textColor="@android:color/white"
+        android:background="@color/primary_blue" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/action_chars_left"
+        android:id="@+id/tvCharsLeft"
+        android:layout_toLeftOf="@+id/btnTweet"
+        android:layout_toStartOf="@+id/btnTweet"
+        android:layout_alignBottom="@+id/btnTweet"
+        android:layout_alignTop="@+id/btnTweet"
+        android:layout_marginRight="@dimen/activity_vertical_margin"
+        android:layout_marginEnd="@dimen/activity_vertical_margin"
+        android:gravity="center"
+        android:textColor="@color/secondary_gary_3"/>
+</RelativeLayout>

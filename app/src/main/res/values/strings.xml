@@ -22,5 +22,6 @@
     <string name="retweeted_by_label">Neil Gaiman retweeted</string>
     <string name="retweets_caps_label">RETWEETS</string>
     <string name="favorites_caps_label">FAVORITES</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

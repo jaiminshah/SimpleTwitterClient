@@ -49,7 +49,12 @@ public class TwitterClient extends OAuthBaseClient {
         client.post(apiUrl,params,handler);
     }
 
-	// CHANGE THIS
+    public void getVerifyCredentials(AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("account/verify_credentials.json");
+        client.get(apiUrl,handler);
+    }
+
+    // CHANGE THIS
 	// DEFINE METHODS for different API endpoints here
 //	public void getInterestingnessList(AsyncHttpResponseHandler handler) {
 //		String apiUrl = getApiUrl("?nojsoncallback=1&method=flickr.interestingness.getList");

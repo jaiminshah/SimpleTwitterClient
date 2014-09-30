@@ -1,8 +1,8 @@
 package com.jaiminshah.codepath.basictwitter.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.Menu;
@@ -15,6 +15,7 @@ import android.widget.ListView;
 
 import com.jaiminshah.codepath.basictwitter.R;
 import com.jaiminshah.codepath.basictwitter.adapters.TweetArrayAdapter;
+import com.jaiminshah.codepath.basictwitter.fragments.ComposeFragment;
 import com.jaiminshah.codepath.basictwitter.helpers.EndlessScrollListener;
 import com.jaiminshah.codepath.basictwitter.helpers.TwitterApplication;
 import com.jaiminshah.codepath.basictwitter.helpers.TwitterClient;
@@ -25,7 +26,7 @@ import org.json.JSONArray;
 
 import java.util.ArrayList;
 
-public class TimelineActivity extends Activity {
+public class TimelineActivity extends FragmentActivity implements ComposeFragment.ComposeFragmentListener {
 
     private TwitterClient client;
     private ArrayList<Tweet> tweets;
@@ -118,9 +119,8 @@ public class TimelineActivity extends Activity {
     }
 
     private void composeTweet() {
-        Intent i = new Intent(this,ComposeActivity.class);
-        i.putExtra("reply","");
-        startActivityForResult(i, REQUEST_CODE);
+        ComposeFragment composeFragment =  ComposeFragment.newInstance("");
+        composeFragment.show(getSupportFragmentManager(),"compose_fragment");
     }
 
     @Override
@@ -152,4 +152,12 @@ public class TimelineActivity extends Activity {
 
     }
 
+    @Override
+    public void onPostTweet(boolean success) {
+        if (success){
+            aTweets.clear();
+            max_id = 0;
+            populateTimeline();
+        }
+    }
 }

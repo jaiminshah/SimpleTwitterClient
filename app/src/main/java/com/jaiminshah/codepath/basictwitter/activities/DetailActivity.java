@@ -1,8 +1,7 @@
 package com.jaiminshah.codepath.basictwitter.activities;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.Menu;
@@ -12,10 +11,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jaiminshah.codepath.basictwitter.R;
+import com.jaiminshah.codepath.basictwitter.fragments.ComposeFragment;
 import com.jaiminshah.codepath.basictwitter.models.Tweet;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-public class DetailActivity extends Activity {
+public class DetailActivity extends FragmentActivity implements ComposeFragment.ComposeFragmentListener {
 
     private Tweet tweet;
     private ImageView ivRetweetedIcon;
@@ -100,9 +100,9 @@ public class DetailActivity extends Activity {
 
 
     public void replyTweet(View view) {
-        Intent i = new Intent(this,ComposeActivity.class);
-        i.putExtra("reply",tweet.getUser().getScreenName());
-        startActivityForResult(i,REQUEST_CODE );
+        //Adding extra space at end for user convenience
+        ComposeFragment composeFragment =  ComposeFragment.newInstance(tweet.getUser().getScreenName() + " ");
+        composeFragment.show(getSupportFragmentManager(),"compose_fragment");
     }
 
     @Override
@@ -116,5 +116,10 @@ public class DetailActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onPostTweet(boolean success) {
+
     }
 }

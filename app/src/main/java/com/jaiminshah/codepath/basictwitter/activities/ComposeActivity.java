@@ -99,7 +99,7 @@ public class ComposeActivity extends Activity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.compose, menu);
         action_chars_left = menu.findItem(R.id.action_chars_left);
-        SpannableString spanString = new SpannableString(Integer.toString(140));
+        SpannableString spanString = new SpannableString(Integer.toString(140 - etComposeTweet.length()));
         spanString.setSpan(new ForegroundColorSpan(Color.RED),0,spanString.length(),0);
         action_chars_left.setTitle(spanString);
         return true;
