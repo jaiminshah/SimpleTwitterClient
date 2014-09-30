@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.jaiminshah.codepath.basictwitter.R;
 import com.jaiminshah.codepath.basictwitter.helpers.TwitterApplication;
+import com.jaiminshah.codepath.basictwitter.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONObject;
@@ -76,6 +77,8 @@ public class ComposeActivity extends Activity {
         TwitterApplication.getRestClient().postUpdate(status, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(JSONObject jsonObject) {
+                Tweet tweet = Tweet.fromJSON(jsonObject);
+                data.putExtra("tweet",tweet);
                 setResult(RESULT_OK, data);
                 finish();
             }

@@ -119,7 +119,7 @@ public class DetailActivity extends FragmentActivity implements ComposeFragment.
     }
 
     @Override
-    public void onPostTweet(boolean success) {
+    public void onPostTweet(boolean success, Tweet newTweet) {
 
     }
 }

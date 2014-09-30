@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.jaiminshah.codepath.basictwitter.R;
 import com.jaiminshah.codepath.basictwitter.helpers.TwitterApplication;
+import com.jaiminshah.codepath.basictwitter.models.Tweet;
 import com.jaiminshah.codepath.basictwitter.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -49,7 +50,7 @@ public class ComposeFragment extends DialogFragment {
     }
 
     public interface ComposeFragmentListener{
-        public void onPostTweet(boolean success);
+        public void onPostTweet(boolean success, Tweet tweet);
     }
 
     private void setupViews(View view) {
@@ -133,7 +134,8 @@ public class ComposeFragment extends DialogFragment {
         TwitterApplication.getRestClient().postUpdate(status, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(JSONObject jsonObject) {
-                listener.onPostTweet(true);
+                Tweet tweet = Tweet.fromJSON(jsonObject);
+                listener.onPostTweet(true,tweet);
                 getDialog().dismiss();
             }
 

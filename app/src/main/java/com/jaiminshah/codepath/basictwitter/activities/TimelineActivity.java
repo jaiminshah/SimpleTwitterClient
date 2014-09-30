@@ -126,9 +126,11 @@ public class TimelineActivity extends FragmentActivity implements ComposeFragmen
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE){
-                    aTweets.clear();
-                    max_id = 0;
-                    populateTimeline();
+//                    aTweets.clear();
+//                    max_id = 0;
+//                    populateTimeline();
+            Tweet tweet = data.getParcelableExtra("tweet");
+            aTweets.insert(tweet,0);
         }
     }
 
@@ -153,11 +155,13 @@ public class TimelineActivity extends FragmentActivity implements ComposeFragmen
     }
 
     @Override
-    public void onPostTweet(boolean success) {
+    public void onPostTweet(boolean success, Tweet tweet) {
         if (success){
-            aTweets.clear();
-            max_id = 0;
-            populateTimeline();
+//
+//            aTweets.clear();
+//            max_id = 0;
+//            populateTimeline();
+            aTweets.insert(tweet,0);
         }
     }
 }

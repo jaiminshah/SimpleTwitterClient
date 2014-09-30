@@ -22,6 +22,9 @@ public class User implements Parcelable {
             user.uid = jsonObject.getLong("id");
             user.screenName = jsonObject.getString("screen_name");
             user.profileImageUrl = jsonObject.getString("profile_image_url");
+            if (user.profileImageUrl.contains("_normal.")){
+                user.profileImageUrl = user.profileImageUrl.replace("_normal.",".");
+            }
         } catch (JSONException e){
             e.printStackTrace();
             return null;
