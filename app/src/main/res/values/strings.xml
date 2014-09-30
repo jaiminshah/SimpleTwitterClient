@@ -17,5 +17,10 @@
     <string name="title_activity_detail">Tweet</string>
     <string name="created_at_label">9/28/14, 10:21 AM</string>
     <string name="action_chars_left">140</string>
+    <string name="retweet_count_label">30</string>
+    <string name="fav_count_label">45</string>
+    <string name="retweeted_by_label">Neil Gaiman retweeted</string>
+    <string name="retweets_caps_label">RETWEETS</string>
+    <string name="favorites_caps_label">FAVORITES</string>
 
 </resources>

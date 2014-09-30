@@ -9,9 +9,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.AdapterView.OnItemClickListener;
 
 import com.jaiminshah.codepath.basictwitter.R;
 import com.jaiminshah.codepath.basictwitter.adapters.TweetArrayAdapter;
@@ -22,7 +22,6 @@ import com.jaiminshah.codepath.basictwitter.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -120,28 +119,16 @@ public class TimelineActivity extends Activity {
 
     private void composeTweet() {
         Intent i = new Intent(this,ComposeActivity.class);
+        i.putExtra("reply","");
         startActivityForResult(i, REQUEST_CODE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE){
-            String status = data.getExtras().getString("status");
-            client.postUpdate(status,new JsonHttpResponseHandler(){
-                @Override
-                public void onSuccess(JSONObject jsonObject) {
                     aTweets.clear();
                     max_id = 0;
                     populateTimeline();
-                }
-
-
-                @Override
-                public void onFailure(Throwable throwable, String s) {
-                    Log.d("debug", throwable.toString());
-                    Log.d("debug", s);
-                }
-            });
         }
     }
 

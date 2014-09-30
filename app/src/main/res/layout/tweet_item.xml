@@ -3,81 +3,182 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="@dimen/tweet_margin"
     android:paddingLeft="@dimen/tweet_margin"
     android:paddingRight="@dimen/tweet_margin"
-    android:paddingTop="@dimen/tweet_margin"
-    android:paddingBottom="@dimen/tweet_margin">
+    android:paddingTop="@dimen/tweet_margin">
 
     <ImageView
-        android:layout_width="@dimen/profile_img"
-        android:layout_height="@dimen/profile_img"
-        android:id="@+id/ivProfileImage"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:id="@+id/ivRetweetedIcon"
+        android:src="@drawable/ic_retweet_icon"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:src="@drawable/user_img_placeholder"
-        android:layout_marginRight="@dimen/small_margin"
-        android:layout_marginEnd="@dimen/small_margin"/>
+        android:layout_alignRight="@+id/ivProfileImage"
+        android:layout_alignEnd="@+id/ivProfileImage"
+        android:visibility="gone"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/username_label"
-        android:id="@+id/tvUsername"
+        android:id="@+id/tvRetweetedBy"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/ivProfileImage"
-        android:layout_toEndOf="@+id/ivProfileImage"
-        android:layout_marginRight="@dimen/tiny_margin"
-        android:layout_marginEnd="@dimen/tiny_margin"
-        android:textStyle="bold"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/screenname_label"
-        android:id="@+id/tvScreenname"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/tvUsername"
-        android:layout_toEndOf="@+id/tvUsername"
+        android:text="@string/retweeted_by_label"
+        android:layout_toEndOf="@+id/ivRetweetedIcon"
+        android:layout_toRightOf="@+id/ivRetweetedIcon"
+        android:layout_alignBottom="@+id/ivRetweetedIcon"
+        android:layout_alignLeft="@+id/tvUsername"
+        android:layout_alignStart="@+id/tvUsername"
+        android:gravity="center"
+        android:textSize="@dimen/small_font_size"
         android:textColor="@color/secondary_gary_3"
-        android:textSize="@dimen/small_font_size"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/time_elapsed_label"
-        android:id="@+id/tvTimeElapsed"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:textColor="@color/secondary_gary_3"
-        android:textSize="@dimen/small_font_size"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/tweet_body_label"
-        android:id="@+id/tvBody"
-        android:layout_below="@+id/tvScreenname"
-        android:layout_toRightOf="@+id/ivProfileImage"
-        android:layout_toEndOf="@+id/ivProfileImage"
-        android:textColor="@color/secondary_gary_1"
-        android:autoLink="all"
-        android:linksClickable="false"
+        android:visibility="gone"
         />
 
+    <ImageView
+        android:id="@+id/ivProfileImage"
+        android:layout_width="@dimen/profile_img"
+        android:layout_height="@dimen/profile_img"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/ivRetweetedIcon"
+        android:layout_marginTop="@dimen/small_margin"
+        android:layout_marginEnd="@dimen/small_margin"
+        android:layout_marginRight="@dimen/small_margin"
+        android:src="@drawable/user_img_placeholder" />
+
+    <TextView
+        android:id="@+id/tvUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvRetweetedBy"
+        android:layout_marginEnd="@dimen/tiny_margin"
+        android:layout_marginRight="@dimen/tiny_margin"
+        android:layout_toEndOf="@+id/ivProfileImage"
+        android:layout_toRightOf="@+id/ivProfileImage"
+        android:layout_alignTop="@+id/ivProfileImage"
+        android:text="@string/username_label"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvScreenname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvRetweetedBy"
+        android:layout_toEndOf="@+id/tvUsername"
+        android:layout_toRightOf="@+id/tvUsername"
+        android:layout_alignTop="@+id/ivProfileImage"
+        android:text="@string/screenname_label"
+        android:textColor="@color/secondary_gary_3"
+        android:textSize="@dimen/small_font_size" />
+
+    <TextView
+        android:id="@+id/tvTimeElapsed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tvRetweetedBy"
+        android:layout_alignTop="@+id/ivProfileImage"
+        android:text="@string/time_elapsed_label"
+        android:textColor="@color/secondary_gary_3"
+        android:textSize="@dimen/small_font_size" />
+
+    <TextView
+        android:id="@+id/tvBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvScreenname"
+        android:layout_toEndOf="@+id/ivProfileImage"
+        android:layout_toRightOf="@+id/ivProfileImage"
+        android:autoLink="all"
+        android:linksClickable="false"
+        android:text="@string/tweet_body_label"
+        android:textColor="@color/secondary_gary_1" />
+
 
     <ImageView
+        android:id="@+id/ivMedia"
         android:layout_width="match_parent"
         android:layout_height="@dimen/media_image_height"
-        android:id="@+id/ivMedia"
+        android:layout_alignLeft="@+id/tvBody"
+        android:layout_alignStart="@+id/tvBody"
         android:layout_below="@+id/tvBody"
         android:layout_marginTop="@dimen/small_margin"
-        android:scaleType="centerCrop"
         android:adjustViewBounds="true"
-        android:visibility="gone"
-        android:layout_alignLeft="@+id/tvBody"
-        android:layout_alignStart="@+id/tvBody" />
+        android:scaleType="centerCrop"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/llBottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignLeft="@id/tvBody"
+        android:layout_alignStart="@+id/tvBody"
+        android:layout_below="@+id/ivMedia"
+        android:layout_marginTop="@dimen/small_margin">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/ivReply"
+            android:src="@drawable/ic_tweet_action_inline_reply_off"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
 
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/ivRetweet"
+            android:src="@drawable/ic_tweet_action_inline_retweet_off"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvRetweet"
+            android:layout_marginLeft="@dimen/small_margin"
+            android:layout_marginStart="@dimen/small_margin"
+            android:text="@string/retweet_count_label"
+            android:textSize="@dimen/small_font_size"
+            android:textColor="@color/secondary_gary_3"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/ivFavCount"
+            android:src="@drawable/ic_tweet_action_inline_favorite_off"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvFavCount"
+            android:layout_marginLeft="@dimen/small_margin"
+            android:layout_marginStart="@dimen/small_margin"
+            android:text="@string/fav_count_label"
+            android:textSize="@dimen/small_font_size"
+            android:textColor="@color/secondary_gary_3"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/ivFollow"
+            android:src="@drawable/ic_tweet_action_inline_follow_off"
+            android:visibility="invisible"/>
+
+
+    </LinearLayout>
 </RelativeLayout>

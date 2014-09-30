@@ -8,11 +8,17 @@ import android.text.Editable;
 import android.text.SpannableString;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.jaiminshah.codepath.basictwitter.R;
+import com.jaiminshah.codepath.basictwitter.helpers.TwitterApplication;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.json.JSONObject;
 
 public class ComposeActivity extends Activity {
 
@@ -27,7 +33,11 @@ public class ComposeActivity extends Activity {
     }
 
     private void setupViews() {
+
         etComposeTweet = (EditText) findViewById(R.id.etComposeTweet);
+        String replyTo = getIntent().getStringExtra("reply");
+        etComposeTweet.setText(replyTo);
+        etComposeTweet.setSelection(replyTo.length());
         etComposeTweet.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -57,13 +67,31 @@ public class ComposeActivity extends Activity {
     }
 
     private void postTweet() {
-        Intent data = new Intent();
+        final Intent data = new Intent();
         String status = etComposeTweet.getText().toString();
         //Trim the status to 140 chars
 //        status = status.substring(0,139);
-        data.putExtra("status", status);
-        setResult(RESULT_OK, data);
-        finish();
+//        data.putExtra("status", status);
+
+        TwitterApplication.getRestClient().postUpdate(status, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(JSONObject jsonObject) {
+                setResult(RESULT_OK, data);
+                finish();
+            }
+
+
+            @Override
+            public void onFailure(Throwable throwable, String s) {
+                Toast.makeText(getBaseContext(),"Sorry. Couldn't post. Please try again.",Toast.LENGTH_SHORT).show();
+                setResult(RESULT_CANCELED,data);
+                Log.d("debug", throwable.toString());
+                Log.d("debug", s);
+                finish();
+            }
+        });
+
+
     }
 
     @Override
