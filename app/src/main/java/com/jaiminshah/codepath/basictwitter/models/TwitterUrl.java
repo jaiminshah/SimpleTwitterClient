@@ -3,6 +3,10 @@ package com.jaiminshah.codepath.basictwitter.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,10 +16,18 @@ import java.util.ArrayList;
 /**
  * Created by jaimins on 9/28/14.
  */
-public class TwitterUrl implements Parcelable {
+@Table(name = "TwitterUrl")
+public class TwitterUrl extends Model implements Parcelable {
+    @Column(name = "url")
     private String url;
+    @Column(name = "expanded_url")
     private String expanded_url;
+    @Column(name = "display_url")
     private String display_url;
+
+    public TwitterUrl() {
+        super();
+    }
 
     public static ArrayList<TwitterUrl> fromJSONArray(JSONArray jsonArray) {
         ArrayList<TwitterUrl> twitterUrls = new ArrayList<TwitterUrl>();
@@ -36,6 +48,7 @@ public class TwitterUrl implements Parcelable {
 
         return twitterUrls;
     }
+
     public static TwitterUrl fromJSON(JSONObject jsonObject) {
         TwitterUrl twitterUrl = new TwitterUrl();
         try {
@@ -78,10 +91,8 @@ public class TwitterUrl implements Parcelable {
         dest.writeString(this.display_url);
     }
 
-    public TwitterUrl() {
-    }
-
     private TwitterUrl(Parcel in) {
+        this();
         this.url = in.readString();
         this.expanded_url = in.readString();
         this.display_url = in.readString();

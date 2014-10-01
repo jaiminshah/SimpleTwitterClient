@@ -4,6 +4,11 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.format.DateUtils;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Select;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,23 +16,36 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /**
  * Created by jaimins on 9/26/14.
  */
-public class Tweet implements Parcelable {
-    private String body;
+@Table(name = "Tweet")
+public class Tweet extends Model implements Parcelable {
+    @Column(name = "uid", unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
     private long uid;
+    @Column(name = "body")
+    private String body;
+    @Column(name = "created_at")
     private String createdAt;
+    @Column(name = "user", onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
     protected User user;
+    @Column(name = "retweet_count")
     private int retweet_count;
+    @Column(name = "retweeted")
     private boolean retweeted;
+    @Column(name = "retweeted_status")
     private Tweet retweeted_status;
+    @Column(name = "favorite_count")
     private int favorite_count;
+    @Column(name = "favorited")
     private boolean favorited;
 
+//    @Column(name = "twitterUrls", onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
     private ArrayList<TwitterUrl> twitterUrls;
+//    @Column(name = "twitterMedias", onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
     private ArrayList<TwitterMedia> twitterMedias;
 
     public static ArrayList<Tweet> fromJSONArray(JSONArray jsonArray) {
@@ -180,6 +198,18 @@ public class Tweet implements Parcelable {
             e.printStackTrace();
         }
         return formattedCreatedAt;
+    }
+
+
+    public void saveTweet(){
+        user.save();
+        this.save();
+    }
+
+    // Get all items.
+    public static List<Tweet> getAll() {
+        return new Select().from(Tweet.class).orderBy("uid DESC").execute();
+//        return new Select().from(Tweet.class).execute();
     }
 
     @Override

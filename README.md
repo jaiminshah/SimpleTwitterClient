@@ -24,14 +24,25 @@ Required:
 Advanced:
 ---------
 * [x] **Advanced:** User can refresh tweets timeline by pulling down to refresh (i.e pull-to-refresh)
+* [x] **Advanced:** User can open the twitter app offline and see last loaded tweets
+ * [x] Tweets are persisted into sqlite and can be displayed from the local DB
 * [x] **Advanced:** User can tap a tweet to display a "detailed" view of that tweet
 * [x] **Advanced:** User can select "reply" from detail view to respond to a tweet
 * [x] **Advanced:** Improve the user interface and theme the app to feel "twitter branded"
+* [x] **Bonus:** User can see embedded image media within the tweet detail view
 * [x] **Bonus:** Compose activity is replaced with a modal overlay
-
 
 Notes:
 ------
+
+The following libraries are used to make this possible:
+
+ * [scribe-java](https://github.com/fernandezpablo85/scribe-java) - Simple OAuth library for handling the authentication flow.
+ * [Android Async HTTP](https://github.com/loopj/android-async-http) - Simple asynchronous HTTP requests with JSON parsing
+ * [codepath-oauth](https://github.com/thecodepath/android-oauth-handler) - Custom-built library for managing OAuth authentication and signing of requests
+ * [UniversalImageLoader](https://github.com/nostra13/Android-Universal-Image-Loader) - Used for async image loading and caching them in memory and on disk.
+ * [ActiveAndroid](https://github.com/pardom/ActiveAndroid) - Simple ORM for persisting a local SQLite database on the Android device
+
 Walkthrough of all user stories:
 
 ![Video Walkthrough](SimpleTwitterClient.gif)

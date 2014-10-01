@@ -3,6 +3,10 @@ package com.jaiminshah.codepath.basictwitter.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,22 +16,19 @@ import java.util.ArrayList;
 /**
  * Created by jaimins on 9/28/14.
  */
-public class TwitterMedia implements Parcelable {
+@Table(name = "TwitterMedia")
+public class TwitterMedia extends Model implements Parcelable {
+    @Column(name = "url")
     private String url;
+    @Column(name = "expanded_url")
     private String expanded_url;
+    @Column(name = "display_url")
     private String display_url;
+    @Column(name = "media_url_https")
     private String media_url_https;
 
-    public String getExpanded_url() {
-        return expanded_url;
-    }
-
-    public String getDisplay_url() {
-        return display_url;
-    }
-
-    public String getMedia_url_https() {
-        return media_url_https;
+    public TwitterMedia() {
+        super();
     }
 
     public static ArrayList<TwitterMedia> fromJSONArray(JSONArray jsonArray) {
@@ -72,6 +73,18 @@ public class TwitterMedia implements Parcelable {
         return url;
     }
 
+    public String getExpanded_url() {
+        return expanded_url;
+    }
+
+    public String getDisplay_url() {
+        return display_url;
+    }
+
+    public String getMedia_url_https() {
+        return media_url_https;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -85,10 +98,8 @@ public class TwitterMedia implements Parcelable {
         dest.writeString(this.media_url_https);
     }
 
-    public TwitterMedia() {
-    }
-
     private TwitterMedia(Parcel in) {
+        this();
         this.url = in.readString();
         this.expanded_url = in.readString();
         this.display_url = in.readString();

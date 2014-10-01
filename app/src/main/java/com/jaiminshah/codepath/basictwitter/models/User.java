@@ -3,17 +3,33 @@ package com.jaiminshah.codepath.basictwitter.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 /**
  * Created by jaimins on 9/26/14.
  */
-public class User implements Parcelable {
-    private String name;
+@Table(name = "User")
+public class User extends Model implements Parcelable {
+//    @Column(name = "uid", unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
+    @Column(name = "uid")
     private long uid;
+    @Column(name = "name")
+    private String name;
+    @Column(name = "screenName")
     private String screenName;
+    @Column(name = "profileImageUrl")
     private String profileImageUrl;
+
+    public User() {
+        super();
+    }
 
     public static User fromJSON(JSONObject jsonObject) {
         User user = new User();
@@ -49,6 +65,10 @@ public class User implements Parcelable {
         return profileImageUrl;
     }
 
+    public List<Tweet> tweets(){
+        return getMany(Tweet.class,"user");
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -62,10 +82,8 @@ public class User implements Parcelable {
         dest.writeString(this.profileImageUrl);
     }
 
-    public User() {
-    }
-
     private User(Parcel in) {
+        this();
         this.name = in.readString();
         this.uid = in.readLong();
         this.screenName = in.readString();
