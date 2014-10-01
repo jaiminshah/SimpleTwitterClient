@@ -149,7 +149,7 @@ public class TimelineActivity extends FragmentActivity implements ComposeFragmen
     }
 
     private void composeTweet() {
-        ComposeFragment composeFragment =  ComposeFragment.newInstance("");
+        ComposeFragment composeFragment =  ComposeFragment.newInstance("",0);
         composeFragment.show(getSupportFragmentManager(),"compose_fragment");
     }
 

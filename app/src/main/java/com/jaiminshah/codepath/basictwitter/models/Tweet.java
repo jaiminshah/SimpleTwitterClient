@@ -125,7 +125,7 @@ public class Tweet extends Model implements Parcelable {
     }
 
     public User getUser() {
-        return user;
+         return user;
     }
 
     public int getRetweet_count() {

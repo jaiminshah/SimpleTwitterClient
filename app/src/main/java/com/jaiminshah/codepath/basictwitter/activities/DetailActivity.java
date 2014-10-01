@@ -101,7 +101,9 @@ public class DetailActivity extends FragmentActivity implements ComposeFragment.
 
     public void replyTweet(View view) {
         //Adding extra space at end for user convenience
-        ComposeFragment composeFragment =  ComposeFragment.newInstance(tweet.getUser().getScreenName() + " ");
+        long uid = tweet.getUid();
+        String screenName = tweet.getUser().getScreenName() + " ";
+        ComposeFragment composeFragment =  ComposeFragment.newInstance(screenName, uid);
         composeFragment.show(getSupportFragmentManager(),"compose_fragment");
     }
 

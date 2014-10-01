@@ -46,14 +46,6 @@
             android:label="@string/title_activity_timeline" >
         </activity>
         <activity
-            android:name="com.jaiminshah.codepath.basictwitter.activities.ComposeActivity"
-            android:label="@string/title_activity_compose"
-            android:parentActivityName="com.jaiminshah.codepath.basictwitter.activities.TimelineActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jaiminshah.codepath.basictwitter.activities.TimelineActivity" />
-        </activity>
-        <activity
             android:name="com.jaiminshah.codepath.basictwitter.activities.DetailActivity"
             android:label="@string/title_activity_detail"
             android:parentActivityName="com.jaiminshah.codepath.basictwitter.activities.TimelineActivity" >

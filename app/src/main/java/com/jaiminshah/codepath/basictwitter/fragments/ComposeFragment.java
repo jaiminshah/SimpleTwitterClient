@@ -36,15 +36,17 @@ public class ComposeFragment extends DialogFragment {
     private TextView tvCharsLeft;
     private Button btnTweet;
     private EditText etComposeTweet;
+    private long inReplyId;
 
     public ComposeFragment(){
 
     }
 
-    public static ComposeFragment newInstance(String replyTo){
+    public static ComposeFragment newInstance(String replyTo, long inReplyId){
         ComposeFragment composeFragment = new ComposeFragment();
         Bundle args = new Bundle();
         args.putString("replyTo", replyTo);
+        args.putLong("inReplyId",inReplyId);
         composeFragment.setArguments(args);
         return composeFragment;
     }
@@ -75,6 +77,7 @@ public class ComposeFragment extends DialogFragment {
         });
 
         String replyTo = getArguments().getString("replyTo", "");
+        inReplyId = getArguments().getLong("inReplyId");
         tvCharsLeft.setText(Integer.toString(140 - replyTo.length()));
         etComposeTweet.setText(replyTo);
         etComposeTweet.setSelection(etComposeTweet.length());
@@ -131,7 +134,7 @@ public class ComposeFragment extends DialogFragment {
 
         String status = etComposeTweet.getText().toString();
 
-        TwitterApplication.getRestClient().postUpdate(status, new JsonHttpResponseHandler() {
+        TwitterApplication.getRestClient().postUpdate(status, inReplyId, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(JSONObject jsonObject) {
                 Tweet tweet = Tweet.fromJSON(jsonObject);
