@@ -13,11 +13,17 @@ import android.widget.TextView;
 
 import com.jaiminshah.codepath.basictwitter.R;
 import com.jaiminshah.codepath.basictwitter.fragments.ComposeFragment;
+import com.jaiminshah.codepath.basictwitter.helpers.TwitterApplication;
+import com.jaiminshah.codepath.basictwitter.helpers.TwitterClient;
 import com.jaiminshah.codepath.basictwitter.models.Tweet;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import org.json.JSONObject;
 
 public class DetailActivity extends FragmentActivity implements ComposeFragment.ComposeFragmentListener {
 
+    private TwitterClient client = TwitterApplication.getRestClient();
     private Tweet tweet;
     private ImageView ivRetweetedIcon;
     private TextView tvRetweetBy;
@@ -39,11 +45,11 @@ public class DetailActivity extends FragmentActivity implements ComposeFragment.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+        tweet = (Tweet) getIntent().getParcelableExtra("tweet");
         setupViews();
     }
 
     private void setupViews() {
-        tweet = (Tweet) getIntent().getParcelableExtra("tweet");
 
         ivRetweetedIcon = (ImageView) findViewById(R.id.ivRetweetedIcon);
         tvRetweetBy = (TextView) findViewById(R.id.tvRetweetedBy);
@@ -76,19 +82,9 @@ public class DetailActivity extends FragmentActivity implements ComposeFragment.
         tvStatus.setMovementMethod(LinkMovementMethod.getInstance());
         tvCreatedAt.setText(tweet.getFormattedCreatedAt());
 
-        if (tweet.isRetweeted()) {
-            ivRetweet.setImageResource(R.drawable.ic_tweet_action_inline_retweet_on);
-        } else {
-            ivRetweet.setImageResource(R.drawable.ic_tweet_action_inline_retweet_off);
-        }
-        tvRetweet.setText(Integer.toString(tweet.getRetweet_count()));
 
-        if (tweet.isFavorited()) {
-            ivFavCount.setImageResource(R.drawable.ic_tweet_action_inline_favorite_on);
-        } else {
-            ivFavCount.setImageResource(R.drawable.ic_tweet_action_inline_favorite_off);
-        }
-        tvFavCount.setText(Integer.toString(tweet.getFavorite_count()));
+        updateRetweet();
+        updateFavorites();
 
         if (tweet.getTwitterMedias() != null && tweet.getTwitterMedias().size() > 0) {
             ImageLoader.getInstance().displayImage(tweet.getTwitterMedias().get(0).getMedia_url_https(), ivMedia);
@@ -99,13 +95,74 @@ public class DetailActivity extends FragmentActivity implements ComposeFragment.
 
     }
 
+    private void updateRetweet(){
+        if (tweet.isRetweeted()) {
+            ivRetweet.setImageResource(R.drawable.ic_tweet_action_inline_retweet_on);
+        } else {
+            ivRetweet.setImageResource(R.drawable.ic_tweet_action_inline_retweet_off);
+        }
+        tvRetweet.setText(Integer.toString(tweet.getRetweet_count()));
+    }
+
+    private void updateFavorites(){
+        if (tweet.isFavorited()) {
+            ivFavCount.setImageResource(R.drawable.ic_tweet_action_inline_favorite_on);
+        } else {
+            ivFavCount.setImageResource(R.drawable.ic_tweet_action_inline_favorite_off);
+        }
+        tvFavCount.setText(Integer.toString(tweet.getFavorite_count()));
+
+    }
 
     public void replyTweet(View view) {
         //Adding extra space at end for user convenience
         long uid = tweet.getUid();
         String screenName = tweet.getUser().getScreenName() + " ";
-        ComposeFragment composeFragment = ComposeFragment.newInstance(screenName, uid);
+        ComposeFragment composeFragment = ComposeFragment.newInstance(tweet.getUser(), screenName, uid);
         composeFragment.show(getSupportFragmentManager(), "compose_fragment");
+    }
+
+    public void toggleRetweet(View view) {
+        if (tweet.isRetweeted()){
+//            client.postDestroy(tweet.getRetweeted_status().getUid(),new JsonHttpResponseHandler(){
+//                @Override
+//                public void onSuccess(JSONObject jsonObject) {
+//                    tweet = Tweet.fromJSON(jsonObject);
+//                    updateRetweet();
+//                }
+//            });
+        } else {
+            client.postRetweet(tweet.getUid(), new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(JSONObject jsonObject) {
+                    tweet = Tweet.fromJSON(jsonObject);
+                    updateRetweet();
+                }
+            });
+
+        }
+    }
+
+    public void toggleFavorite(View view) {
+
+        if (tweet.isFavorited()){
+            client.postFavoriteDestroy(tweet.getUid(),new JsonHttpResponseHandler(){
+                @Override
+                public void onSuccess(JSONObject jsonObject) {
+                    tweet = Tweet.fromJSON(jsonObject);
+                    updateFavorites();
+                }
+            });
+        } else {
+            client.postFavoriteCreate(tweet.getUid(), new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(JSONObject jsonObject) {
+                    tweet = Tweet.fromJSON(jsonObject);
+                    updateFavorites();
+                }
+            });
+        }
+
     }
 
     @Override
@@ -132,4 +189,6 @@ public class DetailActivity extends FragmentActivity implements ComposeFragment.
         startActivity(i);
 
     }
+
+
 }

@@ -83,7 +83,7 @@ public class TimelineActivity extends FragmentActivity implements ComposeFragmen
 
     private void composeTweet() {
         //TODO: pass user in compose fragment.
-        ComposeFragment composeFragment =  ComposeFragment.newInstance("",0);
+        ComposeFragment composeFragment =  ComposeFragment.newInstance(user,"",0);
         composeFragment.show(getSupportFragmentManager(),"compose_fragment");
     }
 

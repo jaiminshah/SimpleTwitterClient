@@ -204,14 +204,16 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:id="@+id/ivRetweet"
-                android:src="@drawable/ic_tweet_action_inline_retweet_off"/>
+                android:src="@drawable/ic_tweet_action_inline_retweet_off"
+                android:onClick="toggleRetweet"/>
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:id="@+id/ivFavCount"
-                android:src="@drawable/ic_tweet_action_inline_favorite_off"/>
+                android:src="@drawable/ic_tweet_action_inline_favorite_off"
+                android:onClick="toggleFavorite"/>
 
             <ImageView
                 android:layout_width="match_parent"

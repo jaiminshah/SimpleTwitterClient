@@ -8,11 +8,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.jaiminshah.codepath.basictwitter.R;
+import com.jaiminshah.codepath.basictwitter.fragments.ComposeFragment;
 import com.jaiminshah.codepath.basictwitter.fragments.UserInfoFragment;
 import com.jaiminshah.codepath.basictwitter.fragments.UserTimelineFragment;
+import com.jaiminshah.codepath.basictwitter.models.Tweet;
 import com.jaiminshah.codepath.basictwitter.models.User;
 
-public class ProfileActivity extends FragmentActivity {
+public class ProfileActivity extends FragmentActivity implements ComposeFragment.ComposeFragmentListener{
 
     private static final String TAG = ProfileActivity.class.getName();
     private User user;
@@ -60,5 +62,10 @@ public class ProfileActivity extends FragmentActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onPostTweet(boolean success, Tweet tweet) {
+        userTimelineFragment.insert(tweet,0);
     }
 }

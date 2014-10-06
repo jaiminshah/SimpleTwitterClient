@@ -37,47 +37,62 @@ public class ComposeFragment extends DialogFragment {
     private Button btnTweet;
     private EditText etComposeTweet;
     private long inReplyId;
+    private String replyTo;
 
-    public ComposeFragment(){
+    public ComposeFragment() {
 
     }
 
-    public static ComposeFragment newInstance(String replyTo, long inReplyId){
+    public static ComposeFragment newInstance(User user, String replyTo, long inReplyId) {
         ComposeFragment composeFragment = new ComposeFragment();
         Bundle args = new Bundle();
+        args.putParcelable("user", user);
         args.putString("replyTo", replyTo);
-        args.putLong("inReplyId",inReplyId);
+        args.putLong("inReplyId", inReplyId);
         composeFragment.setArguments(args);
         return composeFragment;
     }
 
-    public interface ComposeFragmentListener{
+    public interface ComposeFragmentListener {
         public void onPostTweet(boolean success, Tweet tweet);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        user = getArguments().getParcelable("user");
+        replyTo = getArguments().getString("replyTo", "");
+        inReplyId = getArguments().getLong("inReplyId");
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.fragment_compose, container);
+        getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        setupViews(view);
+        return view;
     }
 
     private void setupViews(View view) {
 
-        listener = (ComposeFragmentListener)getActivity();
-        ivProfileImage = (ImageView)view.findViewById(R.id.ivProfileImage);
-        tvUsername = (TextView)view.findViewById(R.id.tvUsername);
-        tvScreenname = (TextView)view.findViewById(R.id.tvScreenname);
-        tvCharsLeft = (TextView)view.findViewById(R.id.tvCharsLeft);
-        btnTweet = (Button)view.findViewById(R.id.btnTweet);
+        listener = (ComposeFragmentListener) getActivity();
+        ivProfileImage = (ImageView) view.findViewById(R.id.ivProfileImage);
+        tvUsername = (TextView) view.findViewById(R.id.tvUsername);
+        tvScreenname = (TextView) view.findViewById(R.id.tvScreenname);
+        tvCharsLeft = (TextView) view.findViewById(R.id.tvCharsLeft);
+        btnTweet = (Button) view.findViewById(R.id.btnTweet);
         etComposeTweet = (EditText) view.findViewById(R.id.etComposeTweet);
 
-        ImageLoader.getInstance().displayImage(user.getProfileImageUrl(),ivProfileImage);
+        ImageLoader.getInstance().displayImage(user.getProfileImageUrl(), ivProfileImage);
         tvUsername.setText(user.getName());
         tvScreenname.setText(user.getScreenName());
 
-        btnTweet.setOnClickListener( new View.OnClickListener() {
+        btnTweet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 postTweet();
             }
         });
-
-        String replyTo = getArguments().getString("replyTo", "");
-        inReplyId = getArguments().getLong("inReplyId");
         tvCharsLeft.setText(Integer.toString(140 - replyTo.length()));
         etComposeTweet.setText(replyTo);
         etComposeTweet.setSelection(etComposeTweet.length());
@@ -108,28 +123,6 @@ public class ComposeFragment extends DialogFragment {
         });
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_compose, container);
-        getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-
-        TwitterApplication.getRestClient().getVerifyCredentials(new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(JSONObject jsonObject) {
-                user = User.fromJSON(jsonObject);
-                setupViews(view);
-            }
-
-            @Override
-            public void onFailure(Throwable throwable, String s) {
-                Log.d("debug", throwable.toString());
-                Log.d("debug", s);
-            }
-        });
-
-        return view;
-    }
-
     private void postTweet() {
 
         String status = etComposeTweet.getText().toString();
@@ -138,7 +131,7 @@ public class ComposeFragment extends DialogFragment {
             @Override
             public void onSuccess(JSONObject jsonObject) {
                 Tweet tweet = Tweet.fromJSON(jsonObject);
-                listener.onPostTweet(true,tweet);
+                listener.onPostTweet(true, tweet);
                 getDialog().dismiss();
             }
 
