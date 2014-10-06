@@ -48,7 +48,8 @@
             android:layout_marginEnd="@dimen/small_margin"
             android:layout_marginRight="@dimen/small_margin"
             android:layout_marginTop="@dimen/small_margin"
-            android:src="@drawable/user_img_placeholder" />
+            android:src="@drawable/user_img_placeholder"
+            android:onClick="onProfileImageClick"/>
 
         <TextView
             android:id="@+id/tvUsername"

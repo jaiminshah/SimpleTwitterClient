@@ -5,4 +5,8 @@
         android:title="@string/action_tweet"
         android:showAsAction="always"
         android:icon="@drawable/ic_new_tweet"/>
+    <item android:id="@+id/action_profile"
+        android:title="@string/action_profile"
+        android:showAsAction="always"
+        android:icon="@drawable/ic_profile"/>
 </menu>

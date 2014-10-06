@@ -1,5 +1,6 @@
 package com.jaiminshah.codepath.basictwitter.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.Html;
@@ -44,20 +45,20 @@ public class DetailActivity extends FragmentActivity implements ComposeFragment.
     private void setupViews() {
         tweet = (Tweet) getIntent().getParcelableExtra("tweet");
 
-        ivRetweetedIcon = (ImageView)findViewById(R.id.ivRetweetedIcon);
-        tvRetweetBy = (TextView)findViewById(R.id.tvRetweetedBy);
-        ivProfileImage = (ImageView)findViewById(R.id.ivProfileImage);
-        tvUsername = (TextView)findViewById(R.id.tvUsername);
-        tvScreenname = (TextView)findViewById(R.id.tvScreenname);
-        tvStatus = (TextView)findViewById(R.id.tvStatus);
-        tvCreatedAt = (TextView)findViewById(R.id.tvCreatedAt);
-        ivMedia = (ImageView)findViewById(R.id.ivMedia);
-        ivRetweet = (ImageView)findViewById(R.id.ivRetweet);
-        tvRetweet = (TextView)findViewById(R.id.tvRetweet);
-        ivFavCount = (ImageView)findViewById(R.id.ivFavCount);
-        tvFavCount = (TextView)findViewById(R.id.tvFavCount);
+        ivRetweetedIcon = (ImageView) findViewById(R.id.ivRetweetedIcon);
+        tvRetweetBy = (TextView) findViewById(R.id.tvRetweetedBy);
+        ivProfileImage = (ImageView) findViewById(R.id.ivProfileImage);
+        tvUsername = (TextView) findViewById(R.id.tvUsername);
+        tvScreenname = (TextView) findViewById(R.id.tvScreenname);
+        tvStatus = (TextView) findViewById(R.id.tvStatus);
+        tvCreatedAt = (TextView) findViewById(R.id.tvCreatedAt);
+        ivMedia = (ImageView) findViewById(R.id.ivMedia);
+        ivRetweet = (ImageView) findViewById(R.id.ivRetweet);
+        tvRetweet = (TextView) findViewById(R.id.tvRetweet);
+        ivFavCount = (ImageView) findViewById(R.id.ivFavCount);
+        tvFavCount = (TextView) findViewById(R.id.tvFavCount);
 
-        if (tweet.getRetweeted_status() != null){
+        if (tweet.getRetweeted_status() != null) {
             ivRetweetedIcon.setVisibility(View.VISIBLE);
             tvRetweetBy.setText(tweet.getUser().getName());
             tvRetweetBy.setVisibility(View.VISIBLE);
@@ -75,22 +76,22 @@ public class DetailActivity extends FragmentActivity implements ComposeFragment.
         tvStatus.setMovementMethod(LinkMovementMethod.getInstance());
         tvCreatedAt.setText(tweet.getFormattedCreatedAt());
 
-        if (tweet.isRetweeted()){
+        if (tweet.isRetweeted()) {
             ivRetweet.setImageResource(R.drawable.ic_tweet_action_inline_retweet_on);
         } else {
             ivRetweet.setImageResource(R.drawable.ic_tweet_action_inline_retweet_off);
         }
         tvRetweet.setText(Integer.toString(tweet.getRetweet_count()));
 
-        if (tweet.isFavorited()){
+        if (tweet.isFavorited()) {
             ivFavCount.setImageResource(R.drawable.ic_tweet_action_inline_favorite_on);
         } else {
             ivFavCount.setImageResource(R.drawable.ic_tweet_action_inline_favorite_off);
         }
         tvFavCount.setText(Integer.toString(tweet.getFavorite_count()));
 
-        if (tweet.getTwitterMedias() != null && tweet.getTwitterMedias().size() > 0){
-            ImageLoader.getInstance().displayImage(tweet.getTwitterMedias().get(0).getMedia_url_https(),ivMedia);
+        if (tweet.getTwitterMedias() != null && tweet.getTwitterMedias().size() > 0) {
+            ImageLoader.getInstance().displayImage(tweet.getTwitterMedias().get(0).getMedia_url_https(), ivMedia);
             ivMedia.setVisibility(View.VISIBLE);
         } else {
             ivMedia.setVisibility(View.GONE);
@@ -103,8 +104,8 @@ public class DetailActivity extends FragmentActivity implements ComposeFragment.
         //Adding extra space at end for user convenience
         long uid = tweet.getUid();
         String screenName = tweet.getUser().getScreenName() + " ";
-        ComposeFragment composeFragment =  ComposeFragment.newInstance(screenName, uid);
-        composeFragment.show(getSupportFragmentManager(),"compose_fragment");
+        ComposeFragment composeFragment = ComposeFragment.newInstance(screenName, uid);
+        composeFragment.show(getSupportFragmentManager(), "compose_fragment");
     }
 
     @Override
@@ -122,6 +123,13 @@ public class DetailActivity extends FragmentActivity implements ComposeFragment.
 
     @Override
     public void onPostTweet(boolean success, Tweet newTweet) {
+
+    }
+
+    public void onProfileImageClick(View view) {
+        Intent i = new Intent(this, ProfileActivity.class);
+        i.putExtra("user", tweet.getUser());
+        startActivity(i);
 
     }
 }

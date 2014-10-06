@@ -1,6 +1,7 @@
 package com.jaiminshah.codepath.basictwitter.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jaiminshah.codepath.basictwitter.R;
+import com.jaiminshah.codepath.basictwitter.activities.ProfileActivity;
 import com.jaiminshah.codepath.basictwitter.models.Tweet;
+import com.jaiminshah.codepath.basictwitter.models.User;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
@@ -63,8 +66,16 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
 
         viewHolder.ivProfileImage.setImageResource(android.R.color.transparent);
         ImageLoader imageLoader = ImageLoader.getInstance();
-
         imageLoader.displayImage(tweet.getUser().getProfileImageUrl(), viewHolder.ivProfileImage);
+        final User user = tweet.getUser();
+        viewHolder.ivProfileImage.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getContext(), ProfileActivity.class);
+                i.putExtra("user",user);
+                getContext().startActivity(i);
+            }
+        });
 
         viewHolder.tvUsername.setText(tweet.getUser().getName());
         viewHolder.tvScreenname.setText(tweet.getUser().getScreenName());

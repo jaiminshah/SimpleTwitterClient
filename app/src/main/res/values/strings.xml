@@ -23,5 +23,13 @@
     <string name="retweets_caps_label">RETWEETS</string>
     <string name="favorites_caps_label">FAVORITES</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="action_profile">Profile</string>
+    <string name="title_activity_profile">ProfileActivity</string>
+    <string name="tweets_label">TWEETS</string>
+    <string name="label_tweets_count">3000</string>
+    <string name="label_following">FOLLOWING</string>
+    <string name="labelFollowersCount">FOLLOWERS</string>
+    <string name="label_following_count">1711</string>
+    <string name="label_followers_count">60000</string>
 
 </resources>
