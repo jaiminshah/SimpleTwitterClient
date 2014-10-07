@@ -9,6 +9,8 @@ import com.loopj.android.http.RequestParams;
 import org.scribe.builder.api.Api;
 import org.scribe.builder.api.TwitterApi;
 
+import java.net.URLEncoder;
+
 /*
  * 
  * This is the object responsible for communicating with a REST API. 
@@ -78,6 +80,19 @@ public class TwitterClient extends OAuthBaseClient {
         }
         client.get(apiUrl, params, handler);
     }
+
+    public void getSearchTweets(String query, long max_id, AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("search/tweets.json");
+        RequestParams params = new RequestParams();
+        if (query != null) {
+            params.put("q", URLEncoder.encode(query));
+        }
+        if (max_id > 0) {
+            params.put("max_id", Long.toString(max_id));
+        }
+        client.get(apiUrl, params, handler);
+    }
+
     public void postFavoriteCreate(long uid, AsyncHttpResponseHandler handler) {
         String apiUrl = getApiUrl("favorites/create.json");
         RequestParams params = new RequestParams();

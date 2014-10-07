@@ -32,5 +32,7 @@
     <string name="label_following_count">1711</string>
     <string name="label_followers_count">60000</string>
     <string name="title_activity_user_list">UserListActivity</string>
+    <string name="title_activity_search_result">SearchResultActivity</string>
+    <string name="action_search">Search</string>
 
 </resources>

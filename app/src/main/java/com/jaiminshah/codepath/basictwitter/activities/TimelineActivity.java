@@ -2,6 +2,7 @@ package com.jaiminshah.codepath.basictwitter.activities;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,6 +10,8 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.SearchView;
 
 import com.jaiminshah.codepath.basictwitter.R;
 import com.jaiminshah.codepath.basictwitter.fragments.ComposeFragment;
@@ -29,6 +32,8 @@ public class TimelineActivity extends FragmentActivity implements ComposeFragmen
     private HomeTimelineFragment homeTimelineFragment;
     private User user;
     SharedPreferences mSettings;
+    SearchView mSearchView;
+    String mQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +108,27 @@ public class TimelineActivity extends FragmentActivity implements ComposeFragmen
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.timeline, menu);
+        final MenuItem searchItem = menu.findItem(R.id.action_search);
+        mSearchView = (SearchView) searchItem.getActionView();
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                mQuery = query;
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(mSearchView.getWindowToken(), 0);
+
+                Intent i = new Intent(getBaseContext(), SearchResultActivity.class);
+                i.putExtra("query",mQuery);
+                startActivity(i);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return true;
+            }
+        });
+
         return true;
     }
 
