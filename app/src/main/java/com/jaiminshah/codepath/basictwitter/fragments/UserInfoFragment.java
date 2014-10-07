@@ -1,6 +1,7 @@
 package com.jaiminshah.codepath.basictwitter.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jaiminshah.codepath.basictwitter.R;
+import com.jaiminshah.codepath.basictwitter.activities.UserListActivity;
 import com.jaiminshah.codepath.basictwitter.models.User;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -71,5 +73,18 @@ public class UserInfoFragment extends Fragment {
         return view;
     }
 
+    public void onFollowingClick(View view){
+        Intent i = new Intent(getActivity(), UserListActivity.class);
+        i.putExtra("title","Following");
+        i.putExtra("user",mUser);
+        startActivity(i);
+    }
+
+    public void onFollowersClick(View view){
+        Intent i = new Intent(getActivity(), UserListActivity.class);
+        i.putExtra("title","Followers");
+        i.putExtra("user",mUser);
+        startActivity(i);
+    }
 
 }

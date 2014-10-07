@@ -3,6 +3,7 @@ package com.jaiminshah.codepath.basictwitter.activities;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -17,6 +18,7 @@ import com.jaiminshah.codepath.basictwitter.helpers.TwitterApplication;
 import com.jaiminshah.codepath.basictwitter.listeners.FragmentTabListener;
 import com.jaiminshah.codepath.basictwitter.models.Tweet;
 import com.jaiminshah.codepath.basictwitter.models.User;
+import com.jaiminshah.codepath.basictwitter.utils.NetworkUtils;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONObject;
@@ -26,11 +28,13 @@ public class TimelineActivity extends FragmentActivity implements ComposeFragmen
     private static final String TAG = TimelineActivity.class.getName();
     private HomeTimelineFragment homeTimelineFragment;
     private User user;
+    SharedPreferences mSettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
+        mSettings = getSharedPreferences("Settings", 0);
         setupView();
         setupTabs();
         homeTimelineFragment = (HomeTimelineFragment)getSupportFragmentManager().findFragmentByTag("HomeTimelineFragment");
@@ -39,19 +43,27 @@ public class TimelineActivity extends FragmentActivity implements ComposeFragmen
     private void setupView() {
         //TODO: Figure out a better way.
         getActionBar().setTitle("");
-        TwitterApplication.getRestClient().getVerifyCredentials( new JsonHttpResponseHandler(){
-            @Override
-            public void onSuccess(JSONObject jsonObject) {
-                user = User.fromJSON(jsonObject);
-                getActionBar().setTitle(user.getScreenName());
-            }
+        if (NetworkUtils.isNetworkAvailable(this)) {
+            TwitterApplication.getRestClient().getVerifyCredentials(new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(JSONObject jsonObject) {
+                    user = User.fromJSON(jsonObject);
+                    getActionBar().setTitle(user.getScreenName());
+                    SharedPreferences.Editor editor = mSettings.edit();
+                    editor.putLong("user_id", user.getUid());
+                    editor.commit();
+                }
 
-            @Override
-            public void onFailure(Throwable throwable, String s) {
-                Log.d(TAG, throwable.toString());
-                Log.d(TAG, s);
-            }
-        });
+                @Override
+                public void onFailure(Throwable throwable, String s) {
+                    Log.d(TAG, throwable.toString());
+                    Log.d(TAG, s);
+                }
+            });
+        } else {
+            user = User.getUser(mSettings.getLong("user_id",0));
+        }
+
     }
 
     private void setupTabs() {

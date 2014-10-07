@@ -61,6 +61,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jaiminshah.codepath.basictwitter.activities.TimelineActivity" />
         </activity>
+        <activity
+            android:name="com.jaiminshah.codepath.basictwitter.activities.UserListActivity"
+            android:label="@string/title_activity_user_list"
+            android:parentActivityName="com.jaiminshah.codepath.basictwitter.activities.ProfileActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jaiminshah.codepath.basictwitter.activities.ProfileActivity" />
+        </activity>
     </application>
 
 </manifest>

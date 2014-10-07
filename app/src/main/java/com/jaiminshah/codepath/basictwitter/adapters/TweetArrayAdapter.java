@@ -105,7 +105,7 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
         updateRetweets(viewHolder,tweet);
 //        final Tweet tempTweet = tweet;
 //        final ViewHolder tempViewHolder = viewHolder;
-//
+
 //        viewHolder.ivFavCount.setOnClickListener( new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -114,7 +114,7 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
 //                    client.postFavoriteDestroy(tempTweet.getUid(),new JsonHttpResponseHandler(){
 //                        @Override
 //                        public void onSuccess(JSONObject jsonObject) {
-//                            tempTweet = Tweet.fromJSON(jsonObject);
+//                            tweet = Tweet.fromJSON(jsonObject);
 //                            updateFavorites(tempViewHolder,tweet);
 //                        }
 //                    });

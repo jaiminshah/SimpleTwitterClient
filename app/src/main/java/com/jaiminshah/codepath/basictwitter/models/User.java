@@ -6,10 +6,13 @@ import android.os.Parcelable;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Select;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,6 +42,26 @@ public class User extends Model implements Parcelable {
 
     public User() {
         super();
+    }
+
+    public static ArrayList<User> fromJSONArray(JSONArray jsonArray) {
+        ArrayList<User> users = new ArrayList<User>();
+        for (int i = 0; i < jsonArray.length(); ++i) {
+            JSONObject userJSON = null;
+            try {
+                userJSON = jsonArray.getJSONObject(i);
+            } catch (JSONException e) {
+                e.printStackTrace();
+                continue;
+            }
+
+            User user = User.fromJSON(userJSON);
+            if (user != null) {
+                users.add(user);
+            }
+        }
+
+        return users;
     }
 
     public static User fromJSON(JSONObject jsonObject) {
@@ -101,6 +124,24 @@ public class User extends Model implements Parcelable {
 
     public List<Tweet> tweets(){
         return getMany(Tweet.class,"user");
+    }
+
+    public static User getUser(long uid){
+        List<User> userList = new Select()
+                .from(User.class)
+                .where("uid = ?",uid)
+                .execute();
+
+        User user = new User();
+        if (userList!= null && userList.size() > 0){
+            return userList.get(0);
+        }
+        return user;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 
     @Override

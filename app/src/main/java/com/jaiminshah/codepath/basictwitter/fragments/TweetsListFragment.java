@@ -131,7 +131,6 @@ public abstract class TweetsListFragment extends Fragment {
                 for (Tweet tweet : tweets){
                     tweet.saveTweet();
                 }
-                int numberInDB = Tweet.getAll().size();
                 swipeContainer.setRefreshing(false);
             }
 

@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.jaiminshah.codepath.basictwitter.R;
 import com.jaiminshah.codepath.basictwitter.fragments.ComposeFragment;
@@ -67,5 +68,13 @@ public class ProfileActivity extends FragmentActivity implements ComposeFragment
     @Override
     public void onPostTweet(boolean success, Tweet tweet) {
         userTimelineFragment.insert(tweet,0);
+    }
+
+    public void onFollowingClick(View view){
+        userInfoFragment.onFollowingClick(view);
+    }
+
+    public void onFollowersClick(View view){
+        userInfoFragment.onFollowersClick(view);
     }
 }
