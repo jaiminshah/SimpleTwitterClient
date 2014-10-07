@@ -23,6 +23,19 @@ Required:
  * [x] User is taken back to home timeline with new tweet visible in timeline
  * [x] **Optional:** User can see a counter with total number of characters left for tweet
 
+Redux:
+-------
+* [x] User can switch between Timeline and Mention views using tabs.
+ * [x] User can view their home timeline tweets.
+ * [x] User can view the recent mentions of their username.
+ * [x] User can scroll to bottom of either of these lists and new tweets will load ("infinite scroll")
+* [x] User can navigate to view their own profile
+ * [x] User can see picture, tagline, # of followers, # of following, and tweets on their profile.
+* [x] User can click on the profile image in any tweet to see another user's profile.
+ * [x] User can see picture, tagline, # of followers, # of following, and tweets of clicked user.
+ * [x] Profile view should include that user's timeline
+ * [x] **Optional:** User can view following / followers list through the profile
+
 Advanced:
 ---------
 * [x] **Advanced:** User can refresh tweets timeline by pulling down to refresh (i.e pull-to-refresh)
@@ -33,6 +46,13 @@ Advanced:
 * [x] **Advanced:** Improve the user interface and theme the app to feel "twitter branded"
 * [x] **Bonus:** User can see embedded image media within the tweet detail view
 * [x] **Bonus:** Compose activity is replaced with a modal overlay
+
+Redux:
+------
+* [x] **Advanced:** Robust error handling, check if internet is available, handle error cases, network failures
+* [x] **Advanced:** User can take favorite (and unfavorite) or reweet actions on a tweet
+* [x] **Advanced:** User can search for tweets matching a particular query and see results
+
 
 Notes:
 ------
@@ -47,6 +67,14 @@ The following libraries are used to make this possible:
 
 Walkthrough of all user stories:
 
+**Initial:**
+
 ![Video Walkthrough](SimpleTwitterClient.gif)
+
+**Redux**
+
+![Video Walkthrough](SimpleTwitterClient_Redux.gif)
+
+
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
