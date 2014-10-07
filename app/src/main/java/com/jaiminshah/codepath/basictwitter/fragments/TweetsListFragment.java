@@ -148,6 +148,7 @@ public abstract class TweetsListFragment extends Fragment {
     }
 
     protected void fetchFromDB(){
+        mProgressBar.setVisibility(View.GONE);
         aTweets.clear();
         aTweets.addAll(Tweet.getAll());
     }
