@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.jaiminshah.codepath.basictwitter.R;
@@ -37,6 +38,7 @@ public abstract class TweetsListFragment extends Fragment {
     protected TweetArrayAdapter aTweets;
     protected ListView lvTweets;
     protected SwipeRefreshLayout swipeContainer;
+    protected ProgressBar mProgressBar;
     protected long max_id;
 
     @Override
@@ -54,6 +56,7 @@ public abstract class TweetsListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tweets_list,container,false);
         setupViews(view);
+        mProgressBar.setVisibility(View.VISIBLE);
         populateTimeline();
         return view;
     }
@@ -102,6 +105,8 @@ public abstract class TweetsListFragment extends Fragment {
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
+
+        mProgressBar = (ProgressBar)view.findViewById(R.id.pbTweetList);
     }
 
     public void populateTimeline(){

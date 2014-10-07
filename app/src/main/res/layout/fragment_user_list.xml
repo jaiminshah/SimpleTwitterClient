@@ -4,6 +4,14 @@
     android:layout_height="match_parent"
     tools:context="com.jaiminshah.codepath.basictwitter.fragments.UserListFragment">
 
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pbUserList"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"/>
 
     <ListView
         android:layout_width="wrap_content"

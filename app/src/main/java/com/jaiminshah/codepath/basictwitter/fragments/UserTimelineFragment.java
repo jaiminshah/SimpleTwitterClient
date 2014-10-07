@@ -2,6 +2,7 @@ package com.jaiminshah.codepath.basictwitter.fragments;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.jaiminshah.codepath.basictwitter.models.Tweet;
 import com.jaiminshah.codepath.basictwitter.models.User;
@@ -44,6 +45,8 @@ public class UserTimelineFragment extends TweetsListFragment {
         if (mUser != null){
             userId = mUser.getUid();
         }
+//        mProgressBar.setVisibility(View.VISIBLE);
+
         client.getUserTimeline(userId, max_id, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(JSONArray jsonArray) {
@@ -53,6 +56,7 @@ public class UserTimelineFragment extends TweetsListFragment {
                     tweet.saveTweet();
                 }
                 swipeContainer.setRefreshing(false);
+                mProgressBar.setVisibility(View.GONE);
             }
 
             @Override

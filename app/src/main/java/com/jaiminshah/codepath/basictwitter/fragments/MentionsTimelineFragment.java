@@ -1,6 +1,7 @@
 package com.jaiminshah.codepath.basictwitter.fragments;
 
 import android.util.Log;
+import android.view.View;
 
 import com.jaiminshah.codepath.basictwitter.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -20,12 +21,12 @@ public class MentionsTimelineFragment extends TweetsListFragment {
         if (tweets.size() > 0){
             max_id = tweets.get(tweets.size() - 1).getUid() - 1 ;
         }
-
         client.getMentionsTimeline(max_id, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(JSONArray jsonArray) {
                 addAll(Tweet.fromJSONArray(jsonArray));
 //                 Log.d("debug", jsonArray.toString());
+                mProgressBar.setVisibility(View.GONE);
                 for (Tweet tweet : tweets) {
                     tweet.saveTweet();
                 }

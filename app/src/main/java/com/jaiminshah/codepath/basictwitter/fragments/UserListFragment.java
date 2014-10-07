@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.jaiminshah.codepath.basictwitter.R;
 import com.jaiminshah.codepath.basictwitter.adapters.UserListArrayAdapter;
@@ -32,6 +33,7 @@ public class UserListFragment extends Fragment {
     private String mTitle;
     private TwitterClient client = TwitterApplication.getRestClient();
     private UserListArrayAdapter maUserList;
+    private ProgressBar mProgressBar;
 
 
     public UserListFragment() {
@@ -56,23 +58,6 @@ public class UserListFragment extends Fragment {
         mUser = getArguments().getParcelable("user");
         mTitle = getArguments().getString("title");
 
-        if (mTitle.equals("Following")){
-            client.getFriendsList(mUser.getUid(), new JsonHttpResponseHandler(){
-                @Override
-                public void onSuccess(JSONObject jsonObject) {
-                  updateUserList(jsonObject);
-                }
-            });
-        } else if (mTitle.equals("Followers")){
-            client.getFollowersList(mUser.getUid(), new JsonHttpResponseHandler() {
-                @Override
-                public void onSuccess(JSONObject jsonObject) {
-                    updateUserList(jsonObject);
-                }
-            });
-        }
-
-
     }
 
     public void updateUserList(JSONObject jsonObject){
@@ -93,6 +78,26 @@ public class UserListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_user_list, container, false);
         ListView lvUserList = (ListView)view.findViewById(R.id.lvUserList);
         lvUserList.setAdapter(maUserList);
+
+        mProgressBar = (ProgressBar) view.findViewById(R.id.pbUserList);
+        mProgressBar.setVisibility(View.VISIBLE);
+        if (mTitle.equals("Following")){
+            client.getFriendsList(mUser.getUid(), new JsonHttpResponseHandler(){
+                @Override
+                public void onSuccess(JSONObject jsonObject) {
+                    updateUserList(jsonObject);
+                    mProgressBar.setVisibility(View.GONE);
+                }
+            });
+        } else if (mTitle.equals("Followers")){
+            client.getFollowersList(mUser.getUid(), new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(JSONObject jsonObject) {
+                    updateUserList(jsonObject);
+                    mProgressBar.setVisibility(View.GONE);
+                }
+            });
+        }
 
         return view;
     }
