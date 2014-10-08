@@ -52,7 +52,7 @@ Redux:
 * [x] **Advanced:** Robust error handling, check if internet is available, handle error cases, network failures
 * [x] **Advanced:** User can take favorite (and unfavorite) or reweet actions on a tweet
 * [x] **Advanced:** User can search for tweets matching a particular query and see results
-
+* [x] **Advanced:** When a network request is sent, user sees an indeterminate progress indicator
 
 Notes:
 ------

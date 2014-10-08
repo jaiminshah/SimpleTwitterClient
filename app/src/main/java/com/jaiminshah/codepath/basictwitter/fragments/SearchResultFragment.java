@@ -5,6 +5,7 @@ package com.jaiminshah.codepath.basictwitter.fragments;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.jaiminshah.codepath.basictwitter.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -56,6 +57,7 @@ public class SearchResultFragment extends TweetsListFragment {
                         e.printStackTrace();
                     }
                     addAll(Tweet.fromJSONArray(jsonArray));
+                    mProgressBar.setVisibility(View.GONE);
                 for (Tweet tweet : tweets) {
                     tweet.saveTweet();
                 }
